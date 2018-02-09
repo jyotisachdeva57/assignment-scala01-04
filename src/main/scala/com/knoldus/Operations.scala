@@ -22,45 +22,31 @@ class Operations {
     f(list, operation)
   }
 
-  def common(list: List[Int], operation: String): Int = {
-
-    def commonInner(element: Int, list: List[Int]): Int = {
-      list match {
-        case Nil => -1
-        case head :: Nil if operation == "sum" => element + head
-        case head :: Nil if operation == "product" => element * head
-        case head :: Nil => head
-        case head :: tail if operation == "sum" => commonInner(head + element, tail)
-        case head :: tail if operation == "product" => commonInner(head * element, tail)
-        case head :: head1 :: tail => if (head > head1) commonInner(0, head :: tail) else commonInner(0, head1 :: tail)
-      }
+  def commonInner(operation: String, element: Int, list: List[Int]): Int = {
+    list match {
+      case head :: Nil if operation == "sum" => element + head
+      case head :: Nil => if (operation == "product") element * head else head
+      case head :: tail if operation == "sum" => commonInner(operation, head + element, tail)
+      case head :: tail if operation == "product" => commonInner(operation, head * element, tail)
+      case head :: head1 :: tail => if (head > head1) commonInner(operation, 0, head :: tail) else commonInner(operation, 0, head1 :: tail)
     }
+  }
 
-    operation match {
-      case "sum" | "max" => commonInner(0, list)
-      case "product" => commonInner(1, list)
+
+  def common(list: List[Int], operation: String): Int = {
+    list match {
+      case Nil => -1
+      case head :: Nil => head
+    }
+    operation.toLowerCase match {
+      case "sum"=> commonInner(operation, 0, list)
+      case "max"=> commonInner(operation, 0, list)
+      case "product" => commonInner(operation, 1, list)
       case _ => throw new NoSuchElementException
     }
   }
 
-  def pascalTri(col: Int, row: Int): Int = {
-
-    def fact(num: Int): Int = {
-
-      def pascalInner(element: Int, num: Int): Int = {
-        if (num == 0) {
-          element
-        }
-        else {
-          pascalInner(element * num, num - 1)
-        }
-
-      }
-
-      pascalInner(1, num)
-    }
-
-    fact(row) / fact(col) * fact(row - col)
-  }
-
 }
+
+
+
