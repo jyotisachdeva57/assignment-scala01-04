@@ -35,7 +35,7 @@ class Operations {
 
   def common(list: List[Int], operation: String): Int = {
     list match {
-      case Nil => -1
+      case Nil => throw new Exception
       case head :: Nil => head
     }
     operation.toLowerCase match {
