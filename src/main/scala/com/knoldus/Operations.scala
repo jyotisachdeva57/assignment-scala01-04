@@ -6,8 +6,8 @@ class Operations {
     func(first, second)
   }
 
-  def sumSquare(first: Int, second: Int): Int = {
-    first * first + second * second
+  def sumSquare(first: Int, sec: Int): Int = {
+    first * first + sec * sec
   }
 
   def sumCube(first: Int, second: Int): Int = {
